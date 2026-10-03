@@ -1,6 +1,6 @@
 BINARY  := xpcolor
 VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
-LDFLAGS := -s -w -X main.Version=$(VERSION)
+LDFLAGS := -s -w -X github.com/tolgayakar/xpcolor/internal/command.version=$(VERSION)
 
 .PHONY: all build test lint fmt tidy clean
 
