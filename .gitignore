@@ -1,0 +1,14 @@
+# Binaries
+/bin/
+/dist/
+/xpcolor
+*.exe
+
+# Test artifacts
+*.out
+coverage.*
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
