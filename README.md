@@ -21,7 +21,7 @@ alias crossplane="xpcolor"
 ## Installation
 
 ```sh
-go install github.com/tolgayakar/xpcolor@latest
+go install github.com/tolgayakar/xpcolor/cmd/xpcolor@latest
 ```
 
 ## Usage
