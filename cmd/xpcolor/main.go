@@ -1,8 +1,11 @@
-// Command xpcolor colorizes the output of the crossplane CLI.
 package main
 
-import "fmt"
+import (
+	"os"
+
+	"github.com/tolgayakar/xpcolor/internal/command"
+)
 
 func main() {
-	fmt.Println("xpcolor")
+	os.Exit(command.Run(os.Args[1:], os.Stdin, os.Stdout, os.Stderr))
 }
