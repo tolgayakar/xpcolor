@@ -8,8 +8,11 @@ import (
 )
 
 type Theme struct {
-	Base ThemeBase
-	Data ThemeData
+	Base   ThemeBase
+	Data   ThemeData
+	Status ThemeStatus
+	Table  ThemeTable
+	Trace  ThemeTrace
 }
 
 type ThemeBase struct {
@@ -32,6 +35,22 @@ type ThemeData struct {
 	Null   color.Color
 }
 
+type ThemeStatus struct {
+	True    color.Color
+	False   color.Color
+	Unknown color.Color
+}
+
+type ThemeTable struct {
+	Header color.Color
+}
+
+type ThemeTrace struct {
+	Tree      color.Color
+	Kind      color.Color
+	Namespace color.Color
+}
+
 func darkTheme() *Theme {
 	return &Theme{
 		Base: ThemeBase{
@@ -46,6 +65,9 @@ func darkTheme() *Theme {
 		},
 		Data: ThemeData{
 			String: color.MustParse("hiyellow"),
+		},
+		Table: ThemeTable{
+			Header: color.MustParse("bold"),
 		},
 	}
 }
@@ -64,6 +86,9 @@ func lightTheme() *Theme {
 		},
 		Data: ThemeData{
 			String: color.MustParse("yellow"),
+		},
+		Table: ThemeTable{
+			Header: color.MustParse("bold"),
 		},
 	}
 }
@@ -91,6 +116,13 @@ func (t *Theme) fields() []field {
 		{key: "data.true", ptr: &t.Data.True, from: "base.success"},
 		{key: "data.false", ptr: &t.Data.False, from: "base.danger"},
 		{key: "data.null", ptr: &t.Data.Null, from: "base.muted"},
+		{key: "status.true", ptr: &t.Status.True, from: "base.success"},
+		{key: "status.false", ptr: &t.Status.False, from: "base.danger"},
+		{key: "status.unknown", ptr: &t.Status.Unknown, from: "base.warning"},
+		{key: "table.header", ptr: &t.Table.Header},
+		{key: "trace.tree", ptr: &t.Trace.Tree, from: "base.muted"},
+		{key: "trace.kind", ptr: &t.Trace.Kind, from: "base.key"},
+		{key: "trace.namespace", ptr: &t.Trace.Namespace, from: "base.muted"},
 	}
 }
 

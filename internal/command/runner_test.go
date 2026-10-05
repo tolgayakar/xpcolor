@@ -36,6 +36,40 @@ func TestRunPassesThrough(t *testing.T) {
 	}
 }
 
+func TestRunColorizesTrace(t *testing.T) {
+	t.Setenv("XPCOLOR_CROSSPLANE", fakeCrossplane(t))
+	trace := "NAME          SYNCED   READY   STATUS\nXBucket/foo   True     False   Creating\n"
+
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"--force-colors", "resource", "trace", "xr/foo"}, strings.NewReader(trace), &stdout, &stderr)
+
+	if code != 0 {
+		t.Errorf("exit code = %d, want 0", code)
+	}
+	want := "args: resource trace xr/foo\n" +
+		"\033[1mNAME          SYNCED   READY   STATUS\033[0m\n" +
+		"\033[96mXBucket\033[0m/foo   \033[32mTrue\033[0m     \033[31mFalse\033[0m   \033[31mCreating\033[0m\n"
+	if stdout.String() != want {
+		t.Errorf("stdout = %q, want %q", stdout.String(), want)
+	}
+}
+
+func TestRunInvalidThemeFallsBackToPlain(t *testing.T) {
+	t.Setenv("XPCOLOR_CROSSPLANE", fakeCrossplane(t))
+	t.Setenv("XPCOLOR_THEME_BASE_DANGER", "pink")
+	trace := "NAME          SYNCED   READY   STATUS\n"
+
+	var stdout, stderr bytes.Buffer
+	Run([]string{"--force-colors", "resource", "trace", "xr/foo"}, strings.NewReader(trace), &stdout, &stderr)
+
+	if want := "args: resource trace xr/foo\n" + trace; stdout.String() != want {
+		t.Errorf("stdout = %q, want %q", stdout.String(), want)
+	}
+	if !strings.Contains(stderr.String(), "XPCOLOR_THEME_BASE_DANGER") {
+		t.Errorf("stderr = %q, want a theme error", stderr.String())
+	}
+}
+
 func TestRunMissingBinary(t *testing.T) {
 	t.Setenv("XPCOLOR_CROSSPLANE", "xpcolor-does-not-exist")
 

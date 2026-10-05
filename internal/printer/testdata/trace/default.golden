@@ -1,0 +1,9 @@
+\e[1mNAME                                                   SYNCED    READY   STATUS\e[0m
+\e[96mObjectStorage\e[0m/test-resource\e[90;3m (default)\e[0m                  \e[32mTrue\e[0m      \e[32mTrue\e[0m    
+\e[90;3m└─ \e[0m\e[96mXObjectStorage\e[0m/test-resource-hash                   \e[32mTrue\e[0m      \e[32mTrue\e[0m    
+\e[90;3m   ├─ \e[0m\e[96mBucket\e[0m/test-resource-bucket-hash                 \e[32mTrue\e[0m      \e[32mTrue\e[0m    
+\e[90;3m   │  ├─ \e[0m\e[96mUser\e[0m/test-resource-child-1-bucket-hash        \e[32mTrue\e[0m      \e[31mFalse\e[0m   \e[31mSomethingWrongHappened\e[0m: ...rure magna. Non cillum id nulla. Anim culpa do duis consectetur.
+\e[90;3m   │  ├─ \e[0m\e[96mUser\e[0m/test-resource-child-mid-bucket-hash      \e[31mFalse\e[0m     \e[32mTrue\e[0m    \e[31mCantSync\e[0m: Sync error with bucket child mid
+\e[90;3m   │  └─ \e[0m\e[96mUser\e[0m/test-resource-child-2-bucket-hash        \e[32mTrue\e[0m      \e[31mFalse\e[0m   \e[31mSomethingWrongHappened\e[0m: Error with bucket child 2
+\e[90;3m   │     └─ \e[0m\e[96mUser\e[0m/test-resource-child-2-1-bucket-hash   \e[32mTrue\e[0m      \e[90;3m-\e[0m       
+\e[90;3m   └─ \e[0m\e[96mUser\e[0m/test-resource-user-hash                     \e[33mUnknown\e[0m   \e[32mTrue\e[0m    
