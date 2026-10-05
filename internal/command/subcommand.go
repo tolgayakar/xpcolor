@@ -11,6 +11,7 @@ import (
 type subcommand struct {
 	path   []string
 	output string
+	format string
 	watch  bool
 	help   bool
 }
@@ -41,6 +42,12 @@ func parseSubcommand(args []string) subcommand {
 			sc.output = value
 		case strings.HasPrefix(arg, "-o") && !strings.HasPrefix(arg, "--"):
 			sc.output = arg[2:]
+		case name == "--format":
+			if !hasValue && i+1 < len(args) {
+				i++
+				value = args[i]
+			}
+			sc.format = value
 		case slices.Contains(valueFlags, name):
 			if !hasValue {
 				i++
@@ -63,11 +70,28 @@ func printerFor(args []string, theme *config.Theme) printer.Printer {
 	if sc.help {
 		return nil
 	}
-	if sc.is("resource", "trace") || sc.is("beta", "trace") {
-		if sc.watch || (sc.output != "" && sc.output != "default" && sc.output != "wide") {
+	switch {
+	case sc.is("resource", "trace") || sc.is("beta", "trace"):
+		if sc.watch {
 			return nil
 		}
-		return &printer.TracePrinter{Theme: theme}
+		switch sc.output {
+		case "", "default", "wide":
+			return &printer.TracePrinter{Theme: theme}
+		case "yaml":
+			return &printer.YAMLPrinter{Theme: theme}
+		case "json":
+			return &printer.JSONPrinter{Theme: theme}
+		}
+	case sc.is("xrd", "convert"):
+		if sc.format == "jsonschema" {
+			return &printer.JSONPrinter{Theme: theme}
+		}
+		return &printer.YAMLPrinter{Theme: theme}
+	case sc.is("render"), sc.is("composition", "render"), sc.is("operation", "render"),
+		sc.is("composition", "convert"), sc.is("xr", "generate"), sc.is("xr", "patch"),
+		sc.is("config", "view"):
+		return &printer.YAMLPrinter{Theme: theme}
 	}
 	return nil
 }
