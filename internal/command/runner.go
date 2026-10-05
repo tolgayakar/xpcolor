@@ -10,6 +10,9 @@ import (
 	"syscall"
 
 	"golang.org/x/term"
+
+	"github.com/tolgayakar/xpcolor/internal/config"
+	"github.com/tolgayakar/xpcolor/internal/printer"
 )
 
 const exitNotFound = 127
@@ -28,12 +31,28 @@ func Run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		return exitNotFound
 	}
 
+	var p printer.Printer
+	if ShouldColorize(opts, stdout) {
+		theme, err := config.LoadTheme(opts.LightBackground, os.Getenv)
+		if err != nil {
+			fmt.Fprintf(stderr, "xpcolor: %v, printing without colors\n", err)
+		} else {
+			p = printerFor(crossplaneArgs, theme)
+		}
+	}
+
 	cmd := exec.Command(path, crossplaneArgs...)
 	cmd.Stdin = stdin
 	cmd.Stdout = stdout
 	cmd.Stderr = stderr
 
+	finish := func() {}
+	if p != nil {
+		cmd.Stdout, finish = pipeTo(p, stdout)
+	}
+
 	if err := cmd.Start(); err != nil {
+		finish()
 		fmt.Fprintf(stderr, "xpcolor: %v\n", err)
 		return 1
 	}
@@ -48,7 +67,9 @@ func Run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		}
 	}()
 
-	if err := cmd.Wait(); err != nil {
+	err = cmd.Wait()
+	finish()
+	if err != nil {
 		if exitErr, ok := errors.AsType[*exec.ExitError](err); ok {
 			return exitErr.ExitCode()
 		}
@@ -56,6 +77,20 @@ func Run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		return 1
 	}
 	return 0
+}
+
+func pipeTo(p printer.Printer, w io.Writer) (io.Writer, func()) {
+	pr, pw := io.Pipe()
+	done := make(chan struct{})
+	go func() {
+		defer close(done)
+		p.Print(pr, w)
+		_, _ = io.Copy(io.Discard, pr)
+	}()
+	return pw, func() {
+		_ = pw.Close()
+		<-done
+	}
 }
 
 func ShouldColorize(opts Options, w io.Writer) bool {
