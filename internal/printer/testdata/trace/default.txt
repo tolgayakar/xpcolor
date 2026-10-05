@@ -1,0 +1,9 @@
+NAME                                                   SYNCED    READY   STATUS
+ObjectStorage/test-resource (default)                  True      True    
+└─ XObjectStorage/test-resource-hash                   True      True    
+   ├─ Bucket/test-resource-bucket-hash                 True      True    
+   │  ├─ User/test-resource-child-1-bucket-hash        True      False   SomethingWrongHappened: ...rure magna. Non cillum id nulla. Anim culpa do duis consectetur.
+   │  ├─ User/test-resource-child-mid-bucket-hash      False     True    CantSync: Sync error with bucket child mid
+   │  └─ User/test-resource-child-2-bucket-hash        True      False   SomethingWrongHappened: Error with bucket child 2
+   │     └─ User/test-resource-child-2-1-bucket-hash   True      -       
+   └─ User/test-resource-user-hash                     Unknown   True    
