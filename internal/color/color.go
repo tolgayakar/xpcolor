@@ -44,6 +44,10 @@ func (c Color) Render(s string) string {
 	return "\033[" + c.code + "m" + s + reset
 }
 
+func (c Color) IsZero() bool {
+	return c.source == ""
+}
+
 func (c Color) String() string {
 	if c.code == "" {
 		return "none"
