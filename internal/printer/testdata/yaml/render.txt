@@ -1,0 +1,53 @@
+---
+apiVersion: example.crossplane.io/v1
+kind: XBucket
+metadata:
+  name: example-render
+status:
+  conditions:
+  - lastTransitionTime: "2024-01-01T00:00:00Z"
+    reason: Available
+    status: "True"
+    type: Ready
+  - lastTransitionTime: "2024-01-01T00:00:00Z"
+    message: 'Unready resources: bucket'
+    reason: Creating
+    status: "False"
+    type: Synced
+---
+apiVersion: s3.aws.upbound.io/v1beta1
+kind: Bucket
+metadata:
+  annotations:
+    crossplane.io/composition-resource-name: storage-bucket
+  generateName: example-render-
+  labels:
+    crossplane.io/composite: example-render
+  ownerReferences:
+  - apiVersion: example.crossplane.io/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: XBucket
+    name: example-render
+    uid: ""
+spec:
+  forProvider:
+    forceDestroy: false
+    region: us-east-2
+    tags: {}
+  initProvider: null
+  maxRetries: 3
+  ratio: 0.75
+  script: |
+    #!/bin/sh
+    echo "key: not a key"
+
+    exit 0
+  providerConfigRef:
+    name: default
+---
+apiVersion: render.crossplane.io/v1beta1
+kind: Result
+message: 'cannot render composed resource "bucket": not ready'
+severity: SEVERITY_WARNING
+step: patch-and-transform
