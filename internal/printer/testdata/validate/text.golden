@@ -1,0 +1,7 @@
+\e[90;3mschemas does not exist, downloading:  xpkg.crossplane.io/crossplane-contrib/provider-nop:v0.6.0\e[0m
+\e[32m[✓]\e[0m example.xpcolor.io/v1alpha1, Kind=Database, healthy validated successfully
+\e[33m[!]\e[0m could not find CRD/XRD for: example.org/v1, Kind=Unknown
+\e[33m[!]\e[0m failed to apply defaults for example.xpcolor.io/v1alpha1, Kind=Database, broken: cannot default spec
+\e[31m[x]\e[0m schema validation error example.xpcolor.io/v1alpha1, Kind=Database, broken : spec.replica.conditions: Invalid value: "string": spec.replica.conditions in body must be of type array: "string"
+\e[31m[x]\e[0m CEL validation error example.xpcolor.io/v1alpha1, Kind=Database, pending : spec: Invalid value: "object": size is immutable
+Total \e[35m5\e[0m resources: \e[33m1\e[0m missing schemas, \e[32m1\e[0m success cases, \e[31m2\e[0m failure cases

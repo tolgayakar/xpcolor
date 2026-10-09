@@ -83,6 +83,15 @@ func printerFor(args []string, theme *config.Theme) printer.Printer {
 		case "json":
 			return &printer.JSONPrinter{Theme: theme}
 		}
+	case sc.is("resource", "validate") || sc.is("beta", "validate"):
+		switch sc.output {
+		case "", "text":
+			return &printer.ValidatePrinter{Theme: theme}
+		case "yaml":
+			return &printer.YAMLPrinter{Theme: theme}
+		case "json":
+			return &printer.JSONPrinter{Theme: theme}
+		}
 	case sc.is("xrd", "convert"):
 		if sc.format == "jsonschema" {
 			return &printer.JSONPrinter{Theme: theme}
