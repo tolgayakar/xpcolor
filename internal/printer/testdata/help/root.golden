@@ -1,0 +1,29 @@
+\e[1mUsage:\e[0m \e[96mcrossplane <command> [flags]\e[0m
+
+  A command line tool for interacting with Crossplane.
+  
+  Please report issues and feature requests at https://github.com/crossplane/cli.
+  
+  | **Note:** Beta features are enabled. Manage enabled features with "crossplane config set".
+
+
+
+\e[1mFlags:\e[0m
+  \e[36m-h, --help\e[0m           Show context-sensitive help.
+      \e[36m--config\e[0m\e[90;3m=PATH\e[0m    Path to the crossplane CLI configuration file ($CROSSPLANE_CONFIG).
+      \e[36m--verbose\e[0m        Print verbose logging statements.
+
+\e[1mCommands:\e[0m
+  \e[96mcluster\e[0m        \e[33m[BETA]\e[0m Inspect a Crossplane cluster.
+  \e[96mcomposition\e[0m    Work with Crossplane Compositions.
+  \e[96mconfig\e[0m         View and update the crossplane CLI configuration file.
+  \e[96mdependency\e[0m     \e[33m[BETA]\e[0m Manage dependencies of control plane Projects.
+  \e[96mfunction\e[0m       \e[33m[BETA]\e[0m Work with functions in control plane Projects.
+  \e[96mproject\e[0m        \e[33m[BETA]\e[0m Work with control plane Projects.
+  \e[96mresource\e[0m       \e[33m[BETA]\e[0m Work with Crossplane resources.
+  \e[96mversion\e[0m        Print the client and server version information for the current context.
+  \e[96mxpkg\e[0m           Work with Crossplane packages.
+  \e[96mxrd\e[0m            \e[33m[BETA]\e[0m Work with Crossplane Composite Resource Definitions (XRDs).
+  \e[96mcompletions\e[0m    Get shell (bash/zsh/fish) completions. You can source this command to get completions for the login shell. Example: 'source <(crossplane completions)'
+
+\e[90;3mRun "crossplane <command> --help" for more information on a command.\e[0m

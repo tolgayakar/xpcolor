@@ -1,0 +1,127 @@
+\e[1mUsage:\e[0m \e[96mcrossplane resource trace <resource> [<name>] [flags]\e[0m
+
+\e[33m[BETA]\e[0m Trace a Crossplane resource for troubleshooting.
+
+  
+  | **Note:** Beta features may change in a future release.
+  
+  The resource trace command traces a Crossplane resource (Claim, Composite, or
+  Managed Resource) to give a detailed view of its relationships and help
+  troubleshoot compositions.
+  
+  The command requires a resource type and a resource name:
+  
+    crossplane resource trace <resource kind> <resource name>
+  
+  Kubernetes-style <kind>/<name> input works too: for example, crossplane
+  resource trace example.crossplane.io/my-xr.
+  
+  You can further specify the kind as TYPE[.VERSION][.GROUP] if needed; for
+  example, mykind.example.org or mykind.v1alpha1.example.org.
+  
+  By default, crossplane resource trace uses the Kubernetes configuration at
+  ~/.kube/config. Override with the KUBECONFIG environment variable.
+  
+  \e[1m## Output options\e[0m
+  
+  By default, trace prints to the terminal as a tree, truncating the Ready and
+  Status messages to 64 characters.
+  
+  Change the format with -o (--output): wide, json, yaml, or dot (for
+  a Graphviz https://graphviz.org/docs/layouts/dot/ graph).
+  
+  \e[1m### Wide output\e[0m
+  
+  Use --output=wide to print the full Ready and Status messages even when
+  they exceed 64 characters, and other kind-specific printer columns.
+  
+  \e[1m### Graphviz dot output\e[0m
+  
+  Use --output=dot to print a textual
+  Graphviz dot https://graphviz.org/docs/layouts/dot/ graph. Pipe to dot to
+  render an image:
+  
+    crossplane resource trace cluster.aws.platformref.upbound.io platform-ref-aws -o dot | dot -Tpng -o graph.png
+  
+  \e[1m## Print connection secrets\e[0m
+  
+  Use --show-connection-secrets to include connection-secret names alongside the
+  other resources. Secret values are never printed. Output includes the secret
+  name and namespace.
+  
+  \e[1m## Print package dependencies\e[0m
+  
+  The --show-package-dependencies flag controls how the display of package
+  dependencies:
+  
+  • unique (default): include each required package only once.
+  • all: show every package that requires the same dependency.
+  • none: hide all package dependencies.
+  
+  \e[1m## Print package revisions\e[0m
+  
+  The --show-package-revisions flag controls the display of package revisions:
+  
+  • active (default): show only the active revisions.
+  • all: show all revisions, including inactive ones.
+  • none: hide all revisions.
+  
+  \e[1m## Examples\e[0m
+  
+  Trace a MyKind resource named my-res in the namespace my-ns:
+  
+    crossplane resource trace mykind my-res -n my-ns
+  
+  Trace all MyKind resources in the namespace my-ns:
+  
+    crossplane resource trace mykind -n my-ns
+  
+  Wide format with full errors, condition messages, and kind-specific columns:
+  
+    crossplane resource trace mykind my-res -n my-ns -o wide
+  
+  Show connection secret names alongside the resources:
+  
+    crossplane resource trace mykind my-res -n my-ns --show-connection-secrets
+  
+  Output a Graphviz dot graph and pipe to dot to generate a PNG:
+  
+    crossplane resource trace mykind my-res -n my-ns -o dot | dot -Tpng -o output.png
+  
+  Output all retrieved resources as JSON and pipe to jq for color:
+  
+    crossplane resource trace mykind my-res -n my-ns -o json | jq
+  
+  Output debug logs to stderr while piping a dot graph to dot:
+  
+    crossplane resource trace mykind my-res -n my-ns -o dot --verbose | dot -Tpng -o output.png
+  
+  Watch a resource continuously until its deletion:
+  
+    crossplane resource trace mykind my-res -n my-ns --watch
+
+
+\e[1mArguments:\e[0m
+  \e[35m<resource>\e[0m    Kind of the Crossplane resource, accepts the 'TYPE[.VERSION][.GROUP][/NAME]' format.
+  \e[35m[<name>]\e[0m      Name of the Crossplane resource, if not passed as part of the resource.
+
+\e[1mFlags:\e[0m
+  \e[36m-h, --help\e[0m                       Show context-sensitive help.
+      \e[36m--config\e[0m\e[90;3m=PATH\e[0m                Path to the crossplane CLI configuration file ($CROSSPLANE_CONFIG).
+      \e[36m--verbose\e[0m                    Print verbose logging statements.
+
+  \e[36m-c, --context\e[0m\e[90;3m=""\e[0m                 Kubernetes context.
+  \e[36m-n, --namespace\e[0m\e[90;3m=""\e[0m               Namespace of the resource.
+  \e[36m-o, --output\e[0m\e[90;3m="default"\e[0m           Output format. One of: default, wide, json, dot, yaml.
+  \e[36m-s, --show-connection-secrets\e[0m    Show connection secrets in the output.
+      \e[36m--show-package-dependencies\e[0m\e[90;3m="unique"\e[0m
+                                   Show package dependencies in the output. One of: unique, all, none.
+      \e[36m--show-package-revisions\e[0m\e[90;3m="active"\e[0m
+                                   Show package revisions in the output. One of: active, all, none.
+      \e[36m--show-package-runtime-configs\e[0m
+                                   Show package runtime configs in the output.
+      \e[36m--concurrency\e[0m\e[90;3m=5\e[0m              load concurrency
+  \e[36m-w, --watch\e[0m                      Watch for changes until resource deletion.
+      \e[36m--as\e[0m\e[90;3m=STRING\e[0m                  Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+      \e[36m--as-group\e[0m\e[90;3m=AS-GROUP\e[0m          Group to impersonate for the operation. Repeat to specify multiple groups.
+      \e[36m--as-uid\e[0m\e[90;3m=STRING\e[0m              UID to impersonate for the operation.

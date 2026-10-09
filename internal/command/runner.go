@@ -31,13 +31,17 @@ func Run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		return exitNotFound
 	}
 
-	var p printer.Printer
+	var outP, errP printer.Printer
 	if ShouldColorize(opts, stdout) {
 		theme, err := config.LoadTheme(opts.LightBackground, os.Getenv)
 		if err != nil {
 			fmt.Fprintf(stderr, "xpcolor: %v, printing without colors\n", err)
 		} else {
-			p = printerFor(crossplaneArgs, theme)
+			outP = printerFor(crossplaneArgs, theme)
+		}
+		// Stderr is line buffered once colored, so only do it for known non-interactive commands.
+		if outP != nil && ShouldColorize(opts, stderr) {
+			errP = &printer.StderrPrinter{Theme: theme}
 		}
 	}
 
@@ -46,9 +50,16 @@ func Run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	cmd.Stdout = stdout
 	cmd.Stderr = stderr
 
-	finish := func() {}
-	if p != nil {
-		cmd.Stdout, finish = pipeTo(p, stdout)
+	finishOut, finishErr := func() {}, func() {}
+	if outP != nil {
+		cmd.Stdout, finishOut = pipeTo(outP, stdout)
+	}
+	if errP != nil {
+		cmd.Stderr, finishErr = pipeTo(errP, stderr)
+	}
+	finish := func() {
+		finishOut()
+		finishErr()
 	}
 
 	if err := cmd.Start(); err != nil {

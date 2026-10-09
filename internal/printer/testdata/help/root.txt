@@ -1,0 +1,29 @@
+Usage: crossplane <command> [flags]
+
+  A command line tool for interacting with Crossplane.
+  
+  Please report issues and feature requests at https://github.com/crossplane/cli.
+  
+  | **Note:** Beta features are enabled. Manage enabled features with "crossplane config set".
+
+
+
+Flags:
+  -h, --help           Show context-sensitive help.
+      --config=PATH    Path to the crossplane CLI configuration file ($CROSSPLANE_CONFIG).
+      --verbose        Print verbose logging statements.
+
+Commands:
+  cluster        [BETA] Inspect a Crossplane cluster.
+  composition    Work with Crossplane Compositions.
+  config         View and update the crossplane CLI configuration file.
+  dependency     [BETA] Manage dependencies of control plane Projects.
+  function       [BETA] Work with functions in control plane Projects.
+  project        [BETA] Work with control plane Projects.
+  resource       [BETA] Work with Crossplane resources.
+  version        Print the client and server version information for the current context.
+  xpkg           Work with Crossplane packages.
+  xrd            [BETA] Work with Crossplane Composite Resource Definitions (XRDs).
+  completions    Get shell (bash/zsh/fish) completions. You can source this command to get completions for the login shell. Example: 'source <(crossplane completions)'
+
+Run "crossplane <command> --help" for more information on a command.

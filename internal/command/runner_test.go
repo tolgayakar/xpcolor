@@ -70,6 +70,25 @@ func TestRunInvalidThemeFallsBackToPlain(t *testing.T) {
 	}
 }
 
+func TestRunColorizesStderr(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "crossplane")
+	script := "#!/bin/sh\necho 'crossplane: error: expected one of \"trace\"' >&2\nexit 80\n"
+	if err := os.WriteFile(path, []byte(script), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("XPCOLOR_CROSSPLANE", path)
+
+	var stdout, stderr bytes.Buffer
+	code := Run([]string{"--force-colors", "resource"}, strings.NewReader(""), &stdout, &stderr)
+
+	if code != 80 {
+		t.Errorf("exit code = %d, want 80", code)
+	}
+	if want := "\033[31mcrossplane: error:\033[0m expected one of \"trace\"\n"; stderr.String() != want {
+		t.Errorf("stderr = %q, want %q", stderr.String(), want)
+	}
+}
+
 func TestRunMissingBinary(t *testing.T) {
 	t.Setenv("XPCOLOR_CROSSPLANE", "xpcolor-does-not-exist")
 
