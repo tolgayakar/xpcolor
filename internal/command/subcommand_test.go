@@ -51,7 +51,7 @@ func TestPrinterFor(t *testing.T) {
 		{args: []string{}, want: "help"},
 		{args: []string{"xpkg", "login"}, want: ""},
 	}
-	theme, err := config.LoadTheme(false, func(string) string { return "" })
+	theme, err := config.LoadTheme("", func(string) string { return "" })
 	if err != nil {
 		t.Fatal(err)
 	}

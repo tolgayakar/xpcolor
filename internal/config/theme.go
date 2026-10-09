@@ -126,10 +126,15 @@ func (t *Theme) fields() []field {
 	}
 }
 
-func LoadTheme(lightBackground bool, getenv func(string) string) (*Theme, error) {
-	t := darkTheme()
-	if lightBackground {
+func LoadTheme(preset string, getenv func(string) string) (*Theme, error) {
+	var t *Theme
+	switch preset {
+	case "", "dark":
+		t = darkTheme()
+	case "light":
 		t = lightTheme()
+	default:
+		return nil, fmt.Errorf("unknown theme preset %q, want dark or light", preset)
 	}
 
 	resolved := map[string]color.Color{}
