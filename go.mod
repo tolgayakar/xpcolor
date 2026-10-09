@@ -1,6 +1,6 @@
 module github.com/tolgayakar/xpcolor
 
-go 1.26.2
+go 1.26.6
 
 require golang.org/x/term v0.46.0
 
