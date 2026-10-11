@@ -1,0 +1,53 @@
+\e[90;3m---\e[0m
+\e[96mapiVersion\e[0m: \e[93mexample.crossplane.io/v1\e[0m
+\e[96mkind\e[0m: \e[93mXBucket\e[0m
+\e[96mmetadata\e[0m:
+  \e[96mname\e[0m: \e[93mexample-render\e[0m
+\e[96mstatus\e[0m:
+  \e[96mconditions\e[0m:
+  - \e[96mlastTransitionTime\e[0m: \e[93m"2024-01-01T00:00:00Z"\e[0m
+    \e[96mreason\e[0m: \e[93mAvailable\e[0m
+    \e[96mstatus\e[0m: \e[32m"True"\e[0m
+    \e[96mtype\e[0m: \e[93mReady\e[0m
+  - \e[96mlastTransitionTime\e[0m: \e[93m"2024-01-01T00:00:00Z"\e[0m
+    \e[96mmessage\e[0m: \e[93m'Unready resources: bucket'\e[0m
+    \e[96mreason\e[0m: \e[93mCreating\e[0m
+    \e[96mstatus\e[0m: \e[31m"False"\e[0m
+    \e[96mtype\e[0m: \e[93mSynced\e[0m
+\e[90;3m---\e[0m
+\e[96mapiVersion\e[0m: \e[93ms3.aws.upbound.io/v1beta1\e[0m
+\e[96mkind\e[0m: \e[93mBucket\e[0m
+\e[96mmetadata\e[0m:
+  \e[96mannotations\e[0m:
+    \e[96mcrossplane.io/composition-resource-name\e[0m: \e[93mstorage-bucket\e[0m
+  \e[96mgenerateName\e[0m: \e[93mexample-render-\e[0m
+  \e[96mlabels\e[0m:
+    \e[96mcrossplane.io/composite\e[0m: \e[93mexample-render\e[0m
+  \e[96mownerReferences\e[0m:
+  - \e[96mapiVersion\e[0m: \e[93mexample.crossplane.io/v1\e[0m
+    \e[96mblockOwnerDeletion\e[0m: \e[32mtrue\e[0m
+    \e[96mcontroller\e[0m: \e[32mtrue\e[0m
+    \e[96mkind\e[0m: \e[93mXBucket\e[0m
+    \e[96mname\e[0m: \e[93mexample-render\e[0m
+    \e[96muid\e[0m: \e[93m""\e[0m
+\e[96mspec\e[0m:
+  \e[96mforProvider\e[0m:
+    \e[96mforceDestroy\e[0m: \e[31mfalse\e[0m
+    \e[96mregion\e[0m: \e[93mus-east-2\e[0m
+    \e[96mtags\e[0m: {}
+  \e[96minitProvider\e[0m: \e[90;3mnull\e[0m
+  \e[96mmaxRetries\e[0m: \e[35m3\e[0m
+  \e[96mratio\e[0m: \e[35m0.75\e[0m
+  \e[96mscript\e[0m: |
+    \e[93m#!/bin/sh\e[0m
+    \e[93mecho "key: not a key"\e[0m
+
+    \e[93mexit 0\e[0m
+  \e[96mproviderConfigRef\e[0m:
+    \e[96mname\e[0m: \e[93mdefault\e[0m
+\e[90;3m---\e[0m
+\e[96mapiVersion\e[0m: \e[93mrender.crossplane.io/v1beta1\e[0m
+\e[96mkind\e[0m: \e[93mResult\e[0m
+\e[96mmessage\e[0m: \e[93m'cannot render composed resource "bucket": not ready'\e[0m
+\e[96mseverity\e[0m: \e[93mSEVERITY_WARNING\e[0m
+\e[96mstep\e[0m: \e[93mpatch-and-transform\e[0m

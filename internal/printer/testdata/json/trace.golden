@@ -1,0 +1,22 @@
+{
+  \e[96m"apiVersion"\e[0m: \e[93m"example.crossplane.io/v1"\e[0m,
+  \e[96m"kind"\e[0m: \e[93m"XBucket"\e[0m,
+  \e[96m"metadata"\e[0m: {
+    \e[96m"name"\e[0m: \e[93m"example"\e[0m,
+    \e[96m"generation"\e[0m: \e[35m2\e[0m,
+    \e[96m"deletionTimestamp"\e[0m: \e[90;3mnull\e[0m,
+    \e[96m"annotations"\e[0m: {}
+  },
+  \e[96m"status"\e[0m: {
+    \e[96m"conditions"\e[0m: [
+      {
+        \e[96m"status"\e[0m: \e[32m"True"\e[0m,
+        \e[96m"type"\e[0m: \e[93m"Ready"\e[0m,
+        \e[96m"message"\e[0m: \e[93m"escaped \"quote\" inside: yes"\e[0m
+      }
+    ],
+    \e[96m"ready"\e[0m: \e[32mtrue\e[0m,
+    \e[96m"synced"\e[0m: \e[31mfalse\e[0m,
+    \e[96m"ratio"\e[0m: \e[35m-1.5e3\e[0m
+  }
+}

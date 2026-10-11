@@ -1,0 +1,22 @@
+{
+  "apiVersion": "example.crossplane.io/v1",
+  "kind": "XBucket",
+  "metadata": {
+    "name": "example",
+    "generation": 2,
+    "deletionTimestamp": null,
+    "annotations": {}
+  },
+  "status": {
+    "conditions": [
+      {
+        "status": "True",
+        "type": "Ready",
+        "message": "escaped \"quote\" inside: yes"
+      }
+    ],
+    "ready": true,
+    "synced": false,
+    "ratio": -1.5e3
+  }
+}

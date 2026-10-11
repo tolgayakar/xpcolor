@@ -1,0 +1,8 @@
+\e[90;3m# leading comment\e[0m
+\e[96mitems\e[0m:
+  - \e[93m"first line\e[0m
+    \e[93mcontinued: here"\e[0m
+  - \e[93mplain\e[0m
+  - \e[35m42\e[0m
+  - \e[90;3m~\e[0m
+\e[90;3m...\e[0m
