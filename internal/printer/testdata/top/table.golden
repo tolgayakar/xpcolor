@@ -1,0 +1,3 @@
+\e[1mTYPE         NAMESPACE           NAME             CPU(cores)   MEMORY\e[0m
+\e[36mcrossplane\e[0m   \e[90;3mcrossplane-system\e[0m   crossplane-123   \e[35m100m\e[0m         \e[35m512Mi\e[0m
+\e[36mfunction\e[0m     \e[90;3mcrossplane-system\e[0m   function-123     \e[35m200m\e[0m         \e[35m1024Mi\e[0m

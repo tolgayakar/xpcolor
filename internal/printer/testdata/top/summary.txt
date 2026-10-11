@@ -1,0 +1,9 @@
+Nr of Crossplane pods: 4
+Crossplane: 2
+Function: 2
+Memory: 3072Mi
+CPU(cores): 900000m
+
+TYPE         NAMESPACE           NAME             CPU(cores)   MEMORY
+crossplane   crossplane-system   crossplane-123   100m         512Mi
+function     crossplane-system   function-123     200m         1024Mi

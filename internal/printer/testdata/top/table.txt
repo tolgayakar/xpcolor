@@ -1,0 +1,3 @@
+TYPE         NAMESPACE           NAME             CPU(cores)   MEMORY
+crossplane   crossplane-system   crossplane-123   100m         512Mi
+function     crossplane-system   function-123     200m         1024Mi
