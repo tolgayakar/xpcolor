@@ -37,6 +37,10 @@ func TestPrinterFor(t *testing.T) {
 		{args: []string{"xr", "patch", "xr.yaml"}, want: "yaml"},
 		{args: []string{"config", "view"}, want: "yaml"},
 		{args: []string{"composition", "render", "--help"}, want: ""},
+		{args: []string{"resource", "validate", "ext.yaml", "res.yaml"}, want: "validate"},
+		{args: []string{"beta", "validate", "ext.yaml", "res.yaml", "-o", "text"}, want: "validate"},
+		{args: []string{"resource", "validate", "ext.yaml", "res.yaml", "--output=json"}, want: "json"},
+		{args: []string{"resource", "validate", "ext.yaml", "res.yaml", "-o", "yaml"}, want: "yaml"},
 		{args: []string{"version"}, want: ""},
 		{args: []string{}, want: ""},
 	}
@@ -61,6 +65,8 @@ func printerName(p printer.Printer) string {
 		return "yaml"
 	case *printer.JSONPrinter:
 		return "json"
+	case *printer.ValidatePrinter:
+		return "validate"
 	}
 	return ""
 }

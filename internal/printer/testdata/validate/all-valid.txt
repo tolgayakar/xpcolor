@@ -1,0 +1,2 @@
+[✓] example.xpcolor.io/v1alpha1, Kind=Database, healthy validated successfully
+Total 1 resources: 0 missing schemas, 1 success cases, 0 failure cases

@@ -1,0 +1,7 @@
+schemas does not exist, downloading:  xpkg.crossplane.io/crossplane-contrib/provider-nop:v0.6.0
+[✓] example.xpcolor.io/v1alpha1, Kind=Database, healthy validated successfully
+[!] could not find CRD/XRD for: example.org/v1, Kind=Unknown
+[!] failed to apply defaults for example.xpcolor.io/v1alpha1, Kind=Database, broken: cannot default spec
+[x] schema validation error example.xpcolor.io/v1alpha1, Kind=Database, broken : spec.replica.conditions: Invalid value: "string": spec.replica.conditions in body must be of type array: "string"
+[x] CEL validation error example.xpcolor.io/v1alpha1, Kind=Database, pending : spec: Invalid value: "object": size is immutable
+Total 5 resources: 1 missing schemas, 1 success cases, 2 failure cases

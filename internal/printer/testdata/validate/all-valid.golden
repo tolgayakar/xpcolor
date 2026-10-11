@@ -1,0 +1,2 @@
+\e[32m[✓]\e[0m example.xpcolor.io/v1alpha1, Kind=Database, healthy validated successfully
+Total \e[35m1\e[0m resources: 0 missing schemas, \e[32m1\e[0m success cases, 0 failure cases
