@@ -1,0 +1,1 @@
+crossplane: error: expected one of "trace", "validate"

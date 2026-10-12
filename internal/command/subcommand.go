@@ -60,6 +60,16 @@ func parseSubcommand(args []string) subcommand {
 	return sc
 }
 
+var groups = []string{
+	"beta", "cluster", "composition", "config", "dependency", "function",
+	"operation", "project", "resource", "xpkg", "xr", "xrd",
+}
+
+// Without a leaf command crossplane prints help to stdout and an error to stderr.
+func isGroup(path []string) bool {
+	return len(path) == 0 || (len(path) == 1 && slices.Contains(groups, path[0]))
+}
+
 func (sc subcommand) is(path ...string) bool {
 	return len(sc.path) >= len(path) && slices.Equal(sc.path[:len(path)], path)
 }
@@ -67,8 +77,8 @@ func (sc subcommand) is(path ...string) bool {
 // trace --watch renders a full-screen TUI, so it is passed through untouched.
 func printerFor(args []string, theme *config.Theme) printer.Printer {
 	sc := parseSubcommand(args)
-	if sc.help {
-		return nil
+	if sc.help || isGroup(sc.path) {
+		return &printer.HelpPrinter{Theme: theme}
 	}
 	switch {
 	case sc.is("resource", "trace") || sc.is("beta", "trace"):

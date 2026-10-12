@@ -24,8 +24,8 @@ func TestPrinterFor(t *testing.T) {
 		{args: []string{"resource", "trace", "xr/foo", "--output=dot"}, want: ""},
 		{args: []string{"resource", "trace", "xr/foo", "-w"}, want: ""},
 		{args: []string{"resource", "trace", "xr/foo", "--watch"}, want: ""},
-		{args: []string{"resource", "trace", "--help"}, want: ""},
-		{args: []string{"resource", "--", "trace"}, want: ""},
+		{args: []string{"resource", "trace", "--help"}, want: "help"},
+		{args: []string{"resource", "--", "trace"}, want: "help"},
 		{args: []string{"composition", "render", "xr.yaml", "comp.yaml", "fn.yaml"}, want: "yaml"},
 		{args: []string{"render", "xr.yaml", "comp.yaml", "fn.yaml"}, want: "yaml"},
 		{args: []string{"composition", "render", "-o", "observed.yaml", "xr.yaml"}, want: "yaml"},
@@ -36,7 +36,10 @@ func TestPrinterFor(t *testing.T) {
 		{args: []string{"xr", "generate", "claim.yaml"}, want: "yaml"},
 		{args: []string{"xr", "patch", "xr.yaml"}, want: "yaml"},
 		{args: []string{"config", "view"}, want: "yaml"},
-		{args: []string{"composition", "render", "--help"}, want: ""},
+		{args: []string{"composition", "render", "--help"}, want: "help"},
+		{args: []string{"-h"}, want: "help"},
+		{args: []string{"resource"}, want: "help"},
+		{args: []string{"--config", "/tmp/cfg", "xrd"}, want: "help"},
 		{args: []string{"resource", "validate", "ext.yaml", "res.yaml"}, want: "validate"},
 		{args: []string{"beta", "validate", "ext.yaml", "res.yaml", "-o", "text"}, want: "validate"},
 		{args: []string{"resource", "validate", "ext.yaml", "res.yaml", "--output=json"}, want: "json"},
@@ -45,7 +48,8 @@ func TestPrinterFor(t *testing.T) {
 		{args: []string{"cluster", "top", "-s", "-n", "crossplane-system"}, want: "top"},
 		{args: []string{"beta", "top"}, want: "top"},
 		{args: []string{"version"}, want: ""},
-		{args: []string{}, want: ""},
+		{args: []string{}, want: "help"},
+		{args: []string{"xpkg", "login"}, want: ""},
 	}
 	theme, err := config.LoadTheme(false, func(string) string { return "" })
 	if err != nil {
@@ -72,6 +76,8 @@ func printerName(p printer.Printer) string {
 		return "validate"
 	case *printer.TopPrinter:
 		return "top"
+	case *printer.HelpPrinter:
+		return "help"
 	}
 	return ""
 }

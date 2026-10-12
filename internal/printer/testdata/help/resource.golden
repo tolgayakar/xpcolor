@@ -1,0 +1,17 @@
+\e[1mUsage:\e[0m \e[96mcrossplane resource <command> [flags]\e[0m
+
+\e[33m[BETA]\e[0m Work with Crossplane resources.
+
+  
+  | **Note:** Beta features may change in a future release.
+
+
+
+\e[1mFlags:\e[0m
+  \e[36m-h, --help\e[0m           Show context-sensitive help.
+      \e[36m--config\e[0m\e[90;3m=PATH\e[0m    Path to the crossplane CLI configuration file ($CROSSPLANE_CONFIG).
+      \e[36m--verbose\e[0m        Print verbose logging statements.
+
+\e[1mCommands:\e[0m
+  \e[96mresource trace\e[0m       \e[33m[BETA]\e[0m Trace a Crossplane resource for troubleshooting.
+  \e[96mresource validate\e[0m    \e[33m[BETA]\e[0m Validate Crossplane resources.

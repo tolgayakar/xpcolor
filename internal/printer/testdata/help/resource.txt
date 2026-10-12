@@ -1,0 +1,17 @@
+Usage: crossplane resource <command> [flags]
+
+[BETA] Work with Crossplane resources.
+
+  
+  | **Note:** Beta features may change in a future release.
+
+
+
+Flags:
+  -h, --help           Show context-sensitive help.
+      --config=PATH    Path to the crossplane CLI configuration file ($CROSSPLANE_CONFIG).
+      --verbose        Print verbose logging statements.
+
+Commands:
+  resource trace       [BETA] Trace a Crossplane resource for troubleshooting.
+  resource validate    [BETA] Validate Crossplane resources.
