@@ -39,6 +39,13 @@ func TestParseArgs(t *testing.T) {
 			wantArgs: []string{"version"},
 		},
 		{
+			name:     "theme flag and env",
+			args:     []string{"--xpcolor-theme", "light", "version", "--xpcolor-theme=dark"},
+			env:      map[string]string{"XPCOLOR_PRESET": "light"},
+			wantOpts: Options{Theme: "dark", CrossplaneCmd: "crossplane"},
+			wantArgs: []string{"version"},
+		},
+		{
 			name:     "invalid boolean env is ignored",
 			args:     []string{},
 			env:      map[string]string{"XPCOLOR_FORCE_COLORS": "yes please"},
@@ -58,5 +65,21 @@ func TestParseArgs(t *testing.T) {
 				t.Errorf("args = %q, want %q", args, tt.wantArgs)
 			}
 		})
+	}
+}
+
+func TestOptionsPreset(t *testing.T) {
+	tests := []struct {
+		opts Options
+		want string
+	}{
+		{opts: Options{}, want: ""},
+		{opts: Options{LightBackground: true}, want: "light"},
+		{opts: Options{LightBackground: true, Theme: "dark"}, want: "dark"},
+	}
+	for _, tt := range tests {
+		if got := tt.opts.Preset(); got != tt.want {
+			t.Errorf("%+v.Preset() = %q, want %q", tt.opts, got, tt.want)
+		}
 	}
 }

@@ -18,7 +18,7 @@ var ansi = regexp.MustCompile("\033\\[[0-9;]*m")
 
 func testTheme(t *testing.T) *config.Theme {
 	t.Helper()
-	th, err := config.LoadTheme(false, func(string) string { return "" })
+	th, err := config.LoadTheme("", func(string) string { return "" })
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -33,7 +33,7 @@ func Run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 
 	var outP, errP printer.Printer
 	if ShouldColorize(opts, stdout) {
-		theme, err := config.LoadTheme(opts.LightBackground, os.Getenv)
+		theme, err := config.LoadTheme(opts.Preset(), os.Getenv)
 		if err != nil {
 			fmt.Fprintf(stderr, "xpcolor: %v, printing without colors\n", err)
 		} else {

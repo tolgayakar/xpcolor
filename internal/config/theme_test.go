@@ -4,19 +4,19 @@ import "testing"
 
 func TestLoadTheme(t *testing.T) {
 	tests := []struct {
-		name  string
-		light bool
-		env   map[string]string
-		check func(*Theme) (got, want string)
+		name   string
+		preset string
+		env    map[string]string
+		check  func(*Theme) (got, want string)
 	}{
 		{
 			name:  "dark preset",
 			check: func(th *Theme) (string, string) { return th.Base.Key.String(), "hicyan" },
 		},
 		{
-			name:  "light preset",
-			light: true,
-			check: func(th *Theme) (string, string) { return th.Base.Key.String(), "hiblue" },
+			name:   "light preset",
+			preset: "light",
+			check:  func(th *Theme) (string, string) { return th.Base.Key.String(), "hiblue" },
 		},
 		{
 			name:  "data defaults from base",
@@ -53,7 +53,7 @@ func TestLoadTheme(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			th, err := LoadTheme(tt.light, func(k string) string { return tt.env[k] })
+			th, err := LoadTheme(tt.preset, func(k string) string { return tt.env[k] })
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -66,7 +66,7 @@ func TestLoadTheme(t *testing.T) {
 
 func TestLoadThemeInvalidEnv(t *testing.T) {
 	env := map[string]string{"XPCOLOR_THEME_BASE_DANGER": "pink"}
-	_, err := LoadTheme(false, func(k string) string { return env[k] })
+	_, err := LoadTheme("", func(k string) string { return env[k] })
 	if err == nil {
 		t.Fatal("expected error")
 	}
@@ -76,15 +76,21 @@ func TestLoadThemeInvalidEnv(t *testing.T) {
 }
 
 func TestThemeFullyResolved(t *testing.T) {
-	for _, light := range []bool{false, true} {
-		th, err := LoadTheme(light, func(string) string { return "" })
+	for _, preset := range []string{"dark", "light"} {
+		th, err := LoadTheme(preset, func(string) string { return "" })
 		if err != nil {
 			t.Fatal(err)
 		}
 		for _, f := range th.fields() {
 			if f.ptr.IsZero() {
-				t.Errorf("light=%v: %s is unset", light, f.key)
+				t.Errorf("%s: %s is unset", preset, f.key)
 			}
 		}
+	}
+}
+
+func TestLoadThemeUnknownPreset(t *testing.T) {
+	if _, err := LoadTheme("solarized", func(string) string { return "" }); err == nil {
+		t.Fatal("expected error")
 	}
 }
