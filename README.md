@@ -2,6 +2,8 @@
 
 xpcolor is a `crossplane` wrapper used to add colors to your Crossplane CLI output.
 
+![xpcolor demo](docs/demo/demo.gif)
+
 ## What's this?
 
 xpcolor is a wrapper that colorizes your `crossplane` command output and does nothing else.
